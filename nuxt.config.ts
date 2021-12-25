@@ -21,7 +21,6 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind.css',
     '~/styles/main.css',
   ],
-  target: 'static',
   components: true,
   bridge: {
     vite: true,
