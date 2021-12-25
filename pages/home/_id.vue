@@ -31,12 +31,11 @@ export default {
     </div>
     <h2>{{ home.title }} </h2>
     {{ home.pricePerNight }} / night<br />
-    <img src="/images/marker.svg" width="20" height="20" alt=""> {{ home.location.address }} {{ home.location.city }} {{ home.location.state }}  {{ home.location.country }}<br />
-    <img src="/images/star.svg" width="20" height="20" alt="">{{ home.reviewValue }}<br />
+    <img src="~/assets/images/marker.svg" width="20" height="20" alt=""> {{ home.location.address }} {{ home.location.city }} {{ home.location.state }}  {{ home.location.country }}<br />
+    <img src="~/assets/images/star.svg" width="20" height="20" alt="">{{ home.reviewValue }}<br />
     {{ home.guests }} guests, {{ home.rooms }} rooms, {{ home.beds }} beds, {{ home.bathrooms }} bath <br />
     {{ home.description }}
     <div ref="map" class="w-full md:w-screen-md h-prose content-center justify-center flex my-8 mx-auto" h-screen-md></div>
-    Test
   </div>
 </template>
 <style lang="">
