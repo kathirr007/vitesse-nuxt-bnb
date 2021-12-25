@@ -1,6 +1,17 @@
 import { defineNuxtConfig } from '@nuxt/bridge-edge'
 
 export default defineNuxtConfig({
+  publicRuntimeConfig: {
+    authClientId: process.env.authClientId,
+    algoliaAppId: process.env.algoliaAppId,
+    algoliaAppKey: process.env.algoliaAppKey,
+    cloudinaryApiKey: process.env.cloudinaryApiKey,
+    cloudinaryApiSecret: process.env.cloudinaryApiSecret,
+    mapsAPI2: process.env.mapsAPI2,
+    mapsAPI: process.env.mapsAPI,
+  },
+  privateRuntimeConfig: {
+  },
   buildModules: [
     '@unocss/nuxt',
     '@vueuse/core/nuxt',
