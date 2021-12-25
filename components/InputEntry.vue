@@ -21,7 +21,7 @@ const name = ref('')
       bg="transparent"
       border="~ rounded gray-200 dark:gray-700"
       outline="none active:none"
-    />
+    >
     <button
       type="submit"
       class="block mx-auto my-3 text-sm btn"

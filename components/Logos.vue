@@ -12,7 +12,7 @@
     cursor-default
   >
     <div flex flex-col children:mx-auto>
-      <img w-18 h-18 inline-block src="/nuxt.svg" />
+      <img w-18 h-18 inline-block src="/nuxt.svg">
       <span text-green5>Nuxt Bridge</span>
     </div>
     <div
@@ -24,7 +24,7 @@
       i-carbon-add
     />
     <div flex flex-col children:mx-auto>
-      <img w-18 h-18 inline-block src="/vite.svg" />
+      <img w-18 h-18 inline-block src="/vite.svg">
       <span text-purple5>Vitesse</span>
     </div>
   </div>
