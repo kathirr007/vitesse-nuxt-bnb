@@ -9,8 +9,10 @@ export default {
       title: this.home.title,
     }
   },
-  created() {
+  async created() {
     const home = homes.find(home => home.objectID === this.$route.params.id)
+    const homeData = await this.$dataApi.getHome(this.$route.params.id)
+    console.log(homeData)
     this.home = home
   },
   mounted() {

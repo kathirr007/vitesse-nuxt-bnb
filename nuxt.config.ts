@@ -27,5 +27,6 @@ export default defineNuxtConfig({
   },
   plugins: [
     '~/plugins/maps.client',
+    '~/plugins/dataApi',
   ],
 })
