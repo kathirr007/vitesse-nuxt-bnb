@@ -5,5 +5,5 @@ export default defineConfig({
   plugins: [StylelintPlugin(
     { fix: true },
   )],
-  publicDir: 'public'
+  publicDir: 'public',
 })
