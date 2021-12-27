@@ -8,6 +8,8 @@ export default function(context, inject) {
 
   inject('dataApi', {
     getHome,
+    getReviewsByHomeId,
+    getUserByHomeId,
   })
 
   async function getHome(homeId) {
@@ -17,7 +19,39 @@ export default function(context, inject) {
       }))
     }
     catch (error) {
-      debugger
+      return getErrorResponse(error)
+    }
+  }
+
+  async function getReviewsByHomeId(homeId) {
+    try {
+      return unWrap(await fetch(`https://${appId}-dsn.algolia.net/1/indexes/nuxt-bnb-reviews/query`, {
+        headers: reqHeaders,
+        method: 'POST',
+        body: JSON.stringify({
+          filters: `homeId:${homeId}`,
+          hitsPerPage: 5,
+          attributesToHighlight: [],
+        }),
+      }))
+    }
+    catch (error) {
+      return getErrorResponse(error)
+    }
+  }
+
+  async function getUserByHomeId(homeId) {
+    try {
+      return unWrap(await fetch(`https://${appId}-dsn.algolia.net/1/indexes/nuxt-bnb-users/query`, {
+        headers: reqHeaders,
+        method: 'POST',
+        body: JSON.stringify({
+          filters: `homeId:${homeId}`,
+          attributesToHighlight: [],
+        }),
+      }))
+    }
+    catch (error) {
       return getErrorResponse(error)
     }
   }

@@ -1,9 +1,25 @@
 <script>
 export default {
   async asyncData({ params, $dataApi, error }) {
-    const response = await $dataApi.getHome(params.id)
-    if (!response.ok) return error({ statusCode: response.status, message: response.statusText })
-    return { home: response.json }
+    const responses = await Promise.all([
+      $dataApi.getHome(params.id),
+      $dataApi.getReviewsByHomeId(params.id),
+      $dataApi.getUserByHomeId(params.id),
+    ])
+    const badResponse = responses.find(response => !response.ok)
+
+    if (badResponse) return error({ statusCode: badResponse.status, message: badResponse.statusText })
+
+    // const homeResponse = await $dataApi.getHome(params.id)
+    // if (!homeResponse.ok) return error({ statusCode: homeResponse.status, message: homeResponse.statusText })
+
+    // const reviewResponse = await $dataApi.getReviewsByHomeId(params.id)
+    // if (!reviewResponse.ok) return error({ statusCode: reviewResponse.status, message: reviewResponse.statusText })
+
+    // const userResponse = await $dataApi.getUserByHomeId(params.id)
+    // if (!userResponse.ok) return error({ statusCode: userResponse.status, message: userResponse.statusText })
+
+    return { home: responses[0].json, reviews: responses[1].json.hits, user: responses[2].json.hits[0] }
   },
   head() {
     return {
@@ -12,6 +28,12 @@ export default {
   },
   mounted() {
     this.$maps.showMap(this.$refs.map, this.home._geoloc.lat, this.home._geoloc.lng)
+  },
+  methods: {
+    formatDate(dateStr) {
+      const date = new Date(dateStr)
+      return date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
+    },
   },
 }
 </script>
@@ -33,9 +55,20 @@ export default {
     {{ home.pricePerNight }} / night<br>
     <img src="/marker.svg" width="20" height="20" alt=""> {{ home.location.address }} {{ home.location.city }} {{ home.location.state }}  {{ home.location.country }}<br>
     <img src="/star.svg" width="20" height="20" alt="">{{ home.reviewValue }}<br>
-    {{ home.guests }} guests, {{ home.rooms }} rooms, {{ home.beds }} beds, {{ home.bathrooms }} bath <br>
+    {{ home.guests }} guests, {{ home.bedrooms }} rooms, {{ home.beds }} beds, {{ home.bathrooms }} bath <br>
     {{ home.description }}
     <div ref="map" class="w-full md:w-screen-md h-prose content-center justify-center flex my-8 mx-auto" h-screen-md />
+    <div v-for="review in reviews" :key="review.objectID">
+      <img :src="review.reviewer.image" alt=""> <br>
+      {{ review.reviewer.name }} <br>
+      {{ formatDate(review.date) }} <br>
+      <short-text :text="review.comment" :target="150" />
+    </div>
+    <img :src="user.image" alt=""> <br>
+    {{ user.name }} <br>
+    {{ formatDate(user.joined) }} <br>
+    {{ user.reviewCount }} <br>
+    <short-text :text="user.description" target="150" /> <br>
   </div>
 </template>
 <style lang="">
